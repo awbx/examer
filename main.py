@@ -53,7 +53,7 @@ class Examer:
         if not self.is_logged_in():
             self.sign_in()
             return
-        res = self.sess.get(self.build_url(""))
+        res = self.sess.get(self.build_url())
         soup = BeautifulSoup(res.text, "html.parser")
         exam_el = soup.find("a", {"data-class": "exam-modal"})
         token_el = soup.find("meta", {"name": "csrf-token"})
@@ -71,7 +71,7 @@ class Examer:
         elif not exam_el:
             print("No exam event yet !")
 
-    def build_url(self, endpoint, base_url=None):
+    def build_url(self, endpoint = "", base_url=None):
         if not base_url:
             base_url = BASE_URL
         return path.join(base_url, endpoint)
