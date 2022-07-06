@@ -4,6 +4,15 @@ from dotenv import load_dotenv
 from os import path, environ
 import time
 import sys
+import signal
+
+
+def exit_gracefully(*args):
+    print("Exiting...", file=sys.stderr)
+    exit(128 + args[0])
+
+signal.signal(signal.SIGINT, exit_gracefully)
+signal.signal(signal.SIGQUIT, exit_gracefully)
 
 BASE_URL = "https://intra.42.fr"
 
